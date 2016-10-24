@@ -1,0 +1,36 @@
+form {
+    margin: auto;
+    width: 50%;
+}
+
+.ui.header.pwd_change.message {
+        position: relative;
+        left: 40%;
+}
+
+
+.ui.header.collection_list {
+    margin: auto;
+    width: 50%
+}
+
+.ui.horizontal.basic.segments.base_profile {
+    width: 1000px;
+    padding-top: 30px;
+    padding-left: 50px;
+    margin: 0;
+    border-bottom-style:hidden;
+    border-right-style: hidden;
+}
+
+.ui.vertical.basic.segment.left {
+    width: 300px;
+    height: 500px;
+}
+
+.ui.vertical.basic.segment.right {
+    width: 700px;
+    padding: 0;
+}
+.ui.header.collection_list {
+}

@@ -1,0 +1,44 @@
+.ui.vertical.basic.segment.masthead{
+    height: 300px;
+    background: url('../images/detail.jpg');
+    background-size: 100% 100%;
+}
+
+.ui.container.nav {
+    width: 550px;
+}
+
+.ui.vertical.basic.segment.article {
+    margin: auto;
+    width: 550px;
+    padding: 10px 0 10px 0;
+}
+
+.ui.mini.black.circular.button {
+    position: absolute;
+    right: 0;
+}
+
+.ui.segment.container {
+    width:550px;
+}
+h1 {
+    font-family:'Oswald', sans-serif;font-size:40px!important;
+}
+
+p {
+    font-family: 'Raleway', sans-serif;
+    font-size:18px;
+}
+
+.ui.card {
+    width:40px;
+    height:40px;
+    display: inline-block;
+}
+
+.user_list_more {
+    padding: 10px;
+    position: absolute;
+    bottom: 30%
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static "css/semantic.css" %}" media="screen" title="no title">
+        <link rel="stylesheet" href="{% static "css/base.css" %}" media="screen" title="no title">
+        {% block css %}{% endblock %}
+        <script type="text/javascript" src={% static "js/jquery.js" %}></script>
+        <script type="text/javascript" src={% static "js/semantic.js" %}></script>
+    </head>
+    <body>
+        <div class="ui vertical basic segment masthead">
+            <div class="ui text menu top">
+                <img class="ui tiny image" src="/static/images/tenlogo.png" alt="" />
+                <div class="right menu">
+                    <div class="item">
+                        <h5 class="ui inverted header">
+                            {% if request.user.profile.real_last_login %}
+                                <span style="margin-right:70px;">Last Visit: {{ request.user.profile.real_last_login|date:"Y-m-d H:i" }}</span>
+                            {% endif %}
+                            <span style="margin-right:20px;"><a href="{% url "profile" %}">{{ request.user.username }}</a></span>
+                            <div class="ui mini circular image">
+                                {% if request.user.profile.profile_image %}
+                                    <img src="/upload/{{ request.user.profile.profile_image }}" alt="" />
+                                {% else %}
+                                    <img src="http://semantic-ui.com/images/avatar/small/matt.jpg" alt="" />
+                                {% endif %}
+                            </div>
+                        </h5>
+                    </div>
+                    <div class="item">
+                        <a href="{% url 'logout' %}" class="ui inverted circular button">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+    </body>
+</html>

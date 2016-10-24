@@ -1,0 +1,23 @@
+{% extends 'base_profile.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}" media="screen" title="no title">
+{% endblock %}
+{% block title %}collection{% endblock %}
+
+{% block profile_detail %}
+        <div class="ui center aligned header">
+            <h1>Collection of articles</h1>
+        </div>
+        <div class="ui header collection_list">
+        {% for article in articles %}
+            <div class="">
+                <a href="{% url 'article_detail' article.id %}">
+                {{ forloop.counter }}. {{ article.title }}
+                <div class="ui divider"></div>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+{% endblock %}

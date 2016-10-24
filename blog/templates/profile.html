@@ -1,0 +1,46 @@
+{% extends 'base_profile.html' %}
+{% load staticfiles %}
+{% block title %}profile{% endblock %}
+
+{% block profile_detail %}
+    <div class="ui center aligned header">
+        <h1>Basic profile</h1>
+    </div>
+    <form class="ui form error" method="post" enctype="multipart/form-data" action="{% url 'profile_post' %}" >
+        {% if form.errors %}
+            <div class="ui error message">
+                {{ form.errors }}
+            </div>
+            {% for field in form  %}
+                <div class="{{ field.errors|yesno:'error, ' }} field">
+                    {{ field.label }}
+                    {{ field }}
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for field in form  %}
+                <div class="field">
+                    <div class="ui header">
+                        {{ field.label }}
+                    </div>
+                    <div class="">
+                        Currently:
+                        {% if field.label == "Image" %}
+                            <div class="ui mini circular image">
+                                <img src="/upload/{{ request.user.profile.profile_image }}" alt="" />
+                            </div>
+                        {% endif %}
+                        {% if field.label == "Gender" %}
+                            {{ request.user.profile.gender }}
+                        {% endif %}
+                    </div>
+                    <div class="">
+                        Change:{{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% csrf_token %}
+        <button class="ui inverted red circular right floated button" type="submit">Submit</button>
+    </form>
+{% endblock %}

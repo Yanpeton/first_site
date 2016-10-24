@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>complete</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css/complete.css' %}" media="screen" title="no title">
+    </head>
+    <body>
+        <div class="ui horizontal basic segments">
+            <div class="ui inverted red basic segment left">
+                <a href="#"><i class=" inverted white angle left icon"></i></a>
+                <div class="ui inverted center aligned header">
+                    <h4>Welcome to</h4></div>
+                <img class="ui image" src="/static/images/tenlogo.png" alt="" />
+            </div>
+            <div class="ui basic segment right">
+                <h2 class="ui center aligned icon header complete">
+                    <i class="user icon"></i>
+                    <div class="content">Opps!</div>
+                    <div class="sub header">We need you complete your userprofile.</div>
+                </h2>
+                <div class="ui two buttons">
+                    <a href="{% url 'profile' %}">
+                        <button class="ui positive button">
+                            Done
+                        </button>
+                    </a>
+                    <a href="{%url 'logout' %}">
+                        <button class="ui button">
+                            Don't want to
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}base_profile{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}" media="screen" title="no title">
+{% endblock %}
+{% block content %}
+    {% if message %}
+        <div class="ui header pwd_change message">
+            {{ message }}
+        </div>
+    {% endif %}
+    <div class="ui horizontal basic segments base_profile">
+        <div class="ui vertical basic segment left">
+            <div class="ui header">
+                <a href="{% url 'article_list' %}">Go to Articles</a>
+            </div>
+            <div class="ui header">
+                <a href="{% url 'profile' %}">Basic Profile</a>
+            </div>
+            <div class="ui header">
+                <a href="{% url 'pwd_change' %}">Change password</a>
+            </div>
+            <div class="ui header">
+                <a href="{% url 'collection_list' %}">Collection of articles</a>
+            </div>
+        </div>
+        <div class="ui vertical basic segment right">
+            {% block profile_detail %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,69 @@
+
+    {% extends 'base.html' %}
+    {% load staticfiles %}
+    {% load humanize %}
+
+    {% block title %}article_list{% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="{% static "css/article.css" %}" media="screen" title="no title">
+    {% endblock %}
+    {% block content %}
+        {% for article in articles_list %}
+            <div class="ui vertical basic segment article">
+                <div class="ui header">
+                    <a href="{%url 'article_detail' article.id %}" style="color:rgb(1, 11, 10)">
+                        <h2>{{ article.title }}</h2>
+                    </a>
+                </div>
+                <a class="ui teal ribbon label">{{ article.tag }}</a>
+                <i class="calendar icon"></i><span style="color:rgb(114, 112, 111)">
+                    {{ article.published_date|date:"Y-m-d" }}</span>
+                <i class="eye icon"></i><span style="color:rgb(114, 122,
+                    111)">{{ article.watched_counts|intcomma }}</span>
+                <i class="checkmark icon"></i><span style="color:rgb(114, 122,
+                    111)">{{ article.got_counts|intcomma }} people got it</span>
+                <p><br>
+                    {{ article.content|truncatewords:50 }}
+                    <a href="{%url 'article_detail' article.id %}">READMORE</a>
+                </p>
+                <div class="ui divider">
+                </div>
+            </div>
+        {% endfor %}
+        <div class="ui center aligned  padded vertical segment container">
+            <div class="ui pagination menu">
+                <a href="?page=1" class="item">First</a>
+                {% if articles_list.has_previous %}
+                    <a href="?page={{ articles_list.previous_page_number }}" class="item">
+                        <i class="icon red left arrow"></i>
+                    </a>
+                {% else %}
+                    <a class="disabled item">
+                        <i class="icon  left arrow"></i>
+                    </a>
+                {% endif %}
+
+                {% for p in page_list %}
+                    {% if p > 0 %}
+                            <a href="?page={{ p }}" class="{% ifequal articles_list.number forloop.counter %}active{%endifequal%} item">{{ p }}</a>
+                    {%elif p == 0 %}
+                        <a class="item">...</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if  articles_list.has_next %}
+                    <a href="?page={{ articles_list.next_page_number }}" class="item">
+                        <i class="icon red right arrow"></i>
+                    </a>
+                {% else %}
+                    <a class="disabled item">
+                        <i class="icon right arrow"></i>
+                    </a>
+                {% endif %}
+                <a href="?page={{ articles_list.paginator.num_pages }}" class="item">End</a>
+            </div>
+            <script type="text/javascript">
+                $('.ui.simple.dropdown.item').dropdown();
+            </script>
+        </div>
+    {% endblock %}

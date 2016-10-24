@@ -1,0 +1,144 @@
+
+    {% extends 'base.html'%}
+    {% load staticfiles %}
+    {% load humanize %}
+    {% load my_filter %}
+
+    {% block title %}article_detail{% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="{% static "css/article.css" %}" media="screen" title="no title">
+    {% endblock%}
+    {% block content %}
+        <div class="ui vertical basic segment article">
+            <div class="ui header">
+                <h2>{{ article.title }}</h2>
+            </div>
+            <a class="ui teal ribbon label">{{ article.tag }}</a>
+            <i class="calendar icon"></i><span style="color:rgb(114, 112, 111)">
+                {{ article.published_date|date:"Y-m-d" }}</span>
+            <i class="eye icon"></i><span style="color:rgb(114, 122,
+                111)">{{ article.watched_counts|intcomma }}</span>
+            <i class="checkmark icon"></i><span style="color:rgb(114, 122,
+                111)">{{ article.got_counts|intcomma }} people got it</span>
+            <p><br>
+                {{ article.content }}
+            </p>
+            <div class="ui divider">
+            </div>
+            <form class="ui form" action="" method="post">
+                {% csrf_token %}
+                {% if request.user in article.collectors.all %}
+                    <button class="ui mini disabled button" type="submit" name="collect" value="yes">
+                        <i class="checkmark icon"></i>
+                        Get it
+                    </button>
+                    <button class="ui mini red button" type="submit" name="collect" value="no">
+                        <i class="reply icon"></i>
+                        Discard it
+                    </button>
+                {% else %}
+                    <button class="ui mini red button" type="submit" name="collect" value="yes">
+                        <i class="checkmark icon"></i>
+                        Collect it
+                    </button>
+                    <button class="ui mini disabled button" type="submit" name="collect" value="no">
+                        <i class="reply icon"></i>
+                        Discard it
+                    </button>
+                {% endif %}
+                    <button class="ui mini black circular button">
+                        <i class="download icon"></i>
+                        Saved
+                    </button>
+            </form>
+        </div>
+        <div class="ui center aligned basic segment container">
+            {% if next_article_id %}
+            <a class="ui blue button" href="{% url 'article_detail' next_article_id %}">
+                Next
+            </a>
+            {%else%}
+            <a class="ui blue disabled button" >
+                Next
+            </a>
+            {%endif%}
+        </div>
+        <div class="ui basic segment container">
+            {% for collector in article.collectors.all|my_truncateuser:display_collector_num %}
+                <div class="ui card">
+                    <div class="image">
+                        {% if collector.profile.profile_image %}
+                            <img src="/upload/{{ collector.profile.profile_image }}" alt="" />
+                        {% else %}
+                            <img src="http://semantic-ui.com/images/avatar/small/matt.jpg" alt="" />
+                        {% endif %}
+                        {{ collector.username }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% if article.collectors.all.count > display_collector_num %}
+                <a class="user_list_more" href=""><h2 class="ui header">...</h2></a>
+            {% endif %}
+        </div>
+        <div class="ui basic segment container">
+            <div class="ui horizontal divider">
+                <h3 class="ui header" style="font-family:'Oswald', sans-serif;">
+                        Comments</h3>
+            </div>
+
+            <div class="ui comments">
+                {% if best_comments %} {% for best_comment in best_comments %}
+                <div class="ui mini red left ribbon label">
+                    <i class="icon fire"></i> BEST
+                </div>
+                <div class="best comment">
+                    <div class="avatar">
+                        <img
+                        src="http://semantic-ui.com/images/avatar/small/matt.jpg" alt="" />
+                    </div>
+                    <div class="content">
+                        <a href="#" class="author">{{ best_comment.name }}
+                                    </a>
+                        <div class="metadata">
+                            <div class="date">{{ best_comment.created_date|naturaltime }}</div>
+                        </div>
+                        <p class="text" style="font-family: 'Raleway',
+                                    sans-serif;">
+                            {{ best_comment.comment }}
+                        </p>
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                {% endfor %}
+                {% endif %}
+                {% for comment in article.under_comments.all %}
+                <div class="comment">
+                    <div class="avatar">
+                        <img
+                        src="http://semantic-ui.com/images/avatar/small/matt.jpg"
+                        alt="" />
+                    </div>
+                    <div class="content">
+                        <a class="author">{{ comment.user.username }}</a>
+                        <div class="metadata">
+                            <div class="date">{{ comment.created_date|naturaltime}}</div>
+                        </div>
+                        <p class="text" style="font-family: 'Raleway',
+                                sans-serif;">
+                            {{ comment.comment }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="ui divider"></div>
+            <form class="ui error tiny form" action="#" method="post">
+                <div class="{{ form.errors|yesno:'error, ' }} field">
+                    {{ form }}
+                </div>
+                {% csrf_token %}
+                <button type="submit" class="ui blue button">Click</button>
+            </form>
+
+        </div>
+    {% endblock%}

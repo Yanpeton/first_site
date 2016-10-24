@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>register_login</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css/register_login.css' %}" media="screen" title="no title">
+    </head>
+    <body>
+        <div class="ui horizontal basic segments">
+            <div class="ui inverted red basic segment left">
+
+                <a href="#"><i class=" inverted white angle left icon"></i></a>
+                <div class="ui inverted center aligned header">
+                    <h4>Welcome to</h4></div>
+                <img class="ui image" src="/static/images/tenlogo.png" alt="" />
+
+            </div>
+            <div class="ui basic segment right">
+                {% if register_or_login == 'Login' %}
+                    <a href="{% url 'login' %}" >or {{ register_or_login }}</a>
+                {% else %}
+                    <a href="{% url 'register' %}" >or {{ register_or_login }}</a>
+                {% endif %}
+                <form class="ui form error" method="post">
+
+                    {% if form.errors %}
+                        <div class="ui error message">
+                            {{ form.errors }}
+                        </div>
+
+                        {% for field in form  %}
+                            <div class="{{ field.errors|yesno:'error, ' }} field">
+                                {{ field.label }}
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                        {% for field in form  %}
+                            <div class="field">
+                                {{ field.label }}
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+
+                    {% endif %}
+
+                    {% csrf_token %}
+
+                    <button class="ui inverted red circular right floated button" type="submit">Done</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
