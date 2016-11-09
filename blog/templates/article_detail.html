@@ -19,7 +19,7 @@
             <i class="eye icon"></i><span style="color:rgb(114, 122,
                 111)">{{ article.watched_counts|intcomma }}</span>
             <i class="checkmark icon"></i><span style="color:rgb(114, 122,
-                111)">{{ article.got_counts|intcomma }} people got it</span>
+                111)">{{ article.collectors.all.count|intcomma }} people got it</span>
             <p><br>
                 {{ article.content }}
             </p>
